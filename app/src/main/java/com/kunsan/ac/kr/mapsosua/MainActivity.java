@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void searchAddress(LatLng latng){
-       
+
     }
 
 
