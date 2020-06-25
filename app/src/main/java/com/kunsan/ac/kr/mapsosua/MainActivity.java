@@ -8,10 +8,12 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Context;
 import android.icu.text.IDNA;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -37,8 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Button btn1 = (Button)findViewById(R.id.basic);
         Button btn2 = (Button)findViewById(R.id.satellite);
         Button btn3 = (Button)findViewById(R.id.terrain);
-
-        Boolean select=true;
+        LinearLayout layout = (LinearLayout)findViewById(R.id.btnLayout);
 
         FragmentManager fm = getSupportFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
@@ -52,30 +53,36 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         choice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    btn1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            myMap.setMapType(NaverMap.MapType.Basic);
-                            Toast.makeText(getApplicationContext(),"기본지도띄우기",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    btn2.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            myMap.setMapType(NaverMap.MapType.Satellite);
-                            Toast.makeText(getApplicationContext(),"위성지도띄우기",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    btn3.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            myMap.setMapType(NaverMap.MapType.Terrain);
-                            Toast.makeText(getApplicationContext(),"terrain 지도띄우기",Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                if(layout.getVisibility()==View.INVISIBLE){
+                    layout.setVisibility(View.VISIBLE);
+                }else{
+                    layout.setVisibility(View.INVISIBLE);
+                }
                     
+            }
+        });
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myMap.setMapType(NaverMap.MapType.Basic);
+                Toast.makeText(getApplicationContext(),"기본지도띄우기",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myMap.setMapType(NaverMap.MapType.Satellite);
+                Toast.makeText(getApplicationContext(),"위성지도띄우기",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myMap.setMapType(NaverMap.MapType.Terrain);
+                Toast.makeText(getApplicationContext(),"terrain 지도띄우기",Toast.LENGTH_SHORT).show();
             }
         });
 
