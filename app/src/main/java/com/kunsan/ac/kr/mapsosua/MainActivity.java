@@ -8,8 +8,11 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Context;
 import android.graphics.PointF;
 import android.icu.text.IDNA;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.view.textclassifier.TextClassifierEvent;
 import android.widget.AdapterView;
@@ -29,7 +32,9 @@ import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.Overlay;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     //버튼 눌렀는지 check하는 변수
@@ -38,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     boolean check3 = false;
 
     NaverMap myMap;
+    //지오코드 객체 선언
+  // Geocoder geocoder = new Geocoder(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,20 +180,36 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         marker2.setOnClickListener(listener);
         marker3.setOnClickListener(listener);
 
-        myMap.setOnMapClickListener(new NaverMap.OnMapClickListener() {
+        myMap.setOnMapClickListener(new NaverMap.OnMapClickListener() {//지도 클릭시
             @Override
             public void onMapClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
+                //지도를 클릭시 클릭한 부분의 위도와 경도를 Toast로 출력
                 String text = "latitude = "+latLng.latitude+" longitude = "+latLng.longitude;
                 Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
+
+
+/*
+                List<Address> list = null;
+                try{
+                    list = geocoder.getFromLocation(
+                            latLng.latitude,
+                            latLng.longitude,
+                            10);
+                }catch (IOException e){
+                    e.printStackTrace();
+                    Log.e("test","입출력 오류 - 서버에서 주소변환시 에러 발생");
+                }
+                if(list != null){
+                    if(list.size()==0){
+                        Toast.makeText(getApplicationContext(),"해당되는 주소정보는 없습니다",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(),list.get(0).getPostalCode(),Toast.LENGTH_SHORT).show();
+                    }
+                }*/
             }
         });
 
     }
-
-    public void searchAddress(LatLng latng){
-
-    }
-
 
 
 }
