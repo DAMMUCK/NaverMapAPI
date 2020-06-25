@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
+import android.graphics.PointF;
 import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.View;
+import android.view.textclassifier.TextClassifierEvent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         mapFragment.getMapAsync(this);
+
 
         //choice버튼 클릭시 안보이던 버튼들이 보이고 다시 한번 클릭하면 버튼들이 안보인다.
         choice.setOnClickListener(new View.OnClickListener() {
@@ -169,13 +172,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         marker2.setOnClickListener(listener);
         marker3.setOnClickListener(listener);
 
+        myMap.setOnMapClickListener(new NaverMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
+                String text = "latitude = "+latLng.latitude+" longitude = "+latLng.longitude;
+                Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
-    public void modifyMethod(){
-
+    public void searchAddress(LatLng latng){
+       
     }
 
-    public void clickMarker(){
 
-    }
+
 }
