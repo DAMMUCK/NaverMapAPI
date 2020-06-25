@@ -30,11 +30,17 @@ import com.naver.maps.map.overlay.Overlay;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+    //버튼 눌렀는지 check하는 변수
+    boolean check1 = false;
+    boolean check2 = false;
+    boolean check3 = false;
+
     NaverMap myMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Button choice = (Button) findViewById(R.id.choice);
         Button btn1 = (Button)findViewById(R.id.basic);
         Button btn2 = (Button)findViewById(R.id.satellite);
@@ -50,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         mapFragment.getMapAsync(this);
 
+        //choice버튼 클릭시 안보이던 버튼들이 보이고 다시 한번 클릭하면 버튼들이 안보인다.
         choice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,24 +72,46 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myMap.setMapType(NaverMap.MapType.Basic);
-                Toast.makeText(getApplicationContext(),"기본지도띄우기",Toast.LENGTH_SHORT).show();
+                if (check1==false){
+                    myMap.setMapType(NaverMap.MapType.Basic);
+                    Toast.makeText(getApplicationContext(),"기본지도띄우기",Toast.LENGTH_SHORT).show();
+                    check1=true;
+                }else{
+                    myMap.setMapType(NaverMap.MapType.Navi);
+                    Toast.makeText(getApplicationContext(),"네비지도띄우기",Toast.LENGTH_SHORT).show();
+                    check1=false;
+                }
             }
         });
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myMap.setMapType(NaverMap.MapType.Satellite);
-                Toast.makeText(getApplicationContext(),"위성지도띄우기",Toast.LENGTH_SHORT).show();
+                if(check2==false){
+                    myMap.setMapType(NaverMap.MapType.Satellite);
+                    Toast.makeText(getApplicationContext(),"위성지도띄우기",Toast.LENGTH_SHORT).show();
+                    check2=true;
+                }else{
+                    myMap.setMapType(NaverMap.MapType.Navi);
+                    Toast.makeText(getApplicationContext(),"네비지도띄우기",Toast.LENGTH_SHORT).show();
+                    check2=false;
+                }
+
             }
         });
 
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myMap.setMapType(NaverMap.MapType.Terrain);
-                Toast.makeText(getApplicationContext(),"terrain 지도띄우기",Toast.LENGTH_SHORT).show();
+                if(check3==false){
+                    myMap.setMapType(NaverMap.MapType.Terrain);
+                    Toast.makeText(getApplicationContext(),"terrain 지도띄우기",Toast.LENGTH_SHORT).show();
+                    check3=true;
+                }else{
+                    myMap.setMapType(NaverMap.MapType.Navi);
+                    Toast.makeText(getApplicationContext(),"네비지도띄우기",Toast.LENGTH_SHORT).show();
+                    check3=false;
+                }
             }
         });
 
@@ -95,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
         this.myMap = naverMap;
-        myMap.setMapType(NaverMap.MapType.Basic);
+        myMap.setMapType(NaverMap.MapType.Navi);
         CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(35.9452863,126.6799643));
         naverMap.moveCamera(cameraUpdate);
         Toast.makeText(this.getApplicationContext(),"지도띄우기",Toast.LENGTH_SHORT).show();
