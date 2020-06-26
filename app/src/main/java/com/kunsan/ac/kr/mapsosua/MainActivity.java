@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     NaverMap myMap;
     //지오코드 객체 선언
-  // Geocoder geocoder = new Geocoder(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         mapFragment.getMapAsync(this);
-
 
         //choice버튼 클릭시 안보이던 버튼들이 보이고 다시 한번 클릭하면 버튼들이 안보인다.
         choice.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+
         //마커클릭시 이벤트
         Overlay.OnClickListener listener = overlay -> {
             Marker mark = (Marker)overlay;
@@ -176,6 +175,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             return true;
         };
 
+        Geocoder geocoder = new Geocoder(this);
+
         marker.setOnClickListener(listener);
         marker2.setOnClickListener(listener);
         marker3.setOnClickListener(listener);
@@ -188,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
 
 
-/*
+
                 List<Address> list = null;
                 try{
                     list = geocoder.getFromLocation(
@@ -205,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }else{
                         Toast.makeText(getApplicationContext(),list.get(0).getPostalCode(),Toast.LENGTH_SHORT).show();
                     }
-                }*/
+                }
             }
         });
 
